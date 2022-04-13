@@ -16,6 +16,9 @@ SHEET = GSPREAD_CLIENT.open('love_sandwiches(v2)')
 def get_sales_data():
     """
     Get sales figures input from the user.
+    Run a while loop to collect a valid string of data from the user
+    via the terminal, which must be a string of 6 numbers separated
+    by commas. The loop will repeatedly request data, until it is valid.
     """
     # Create a while loop to keep running until stopped
     while True:
@@ -70,5 +73,26 @@ def validate_data(values):
     return True
 
 
+# Function to insert sales_data in Google Sheet, pass in data to insert
+def update_sales_worksheet(data):
+    """
+    Update sales worksheet, add new row with the list data provided
+    """
+    # give user feedback in the terminal while program is busy
+    print("Updating sales worksheet...\n")
+    # access sales worksheet from Google Sheet refer to SHEET variable at top
+    # use gspread worksheet() method to access our sales worksheet
+    sales_worksheet = SHEET.worksheet("sales")
+    # use gspread method append_row() to add new row at end of data
+    # pass in data to be inserted
+    sales_worksheet.append_row(data)
+    # give feedback to user that sales worksheet updated successfully
+    print("Sales worksheet updated successfully.\n")
+
+
 # Because function returns a value, need to place it where it is called
 data = get_sales_data()
+# Convert each numbers in data list into a integers
+sales_data = [int(num) for num in data]
+# call our function and pass it our sales_data list
+update_sales_worksheet(sales_data)
