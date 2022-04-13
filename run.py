@@ -91,6 +91,22 @@ def update_sales_worksheet(data):
     print("Sales worksheet updated successfully.\n")
 
 
+def update_surplus_worksheet(data):
+    """
+    Update surplus worksheet, add new row with the list data provided
+    """
+    # give user feedback in the terminal while program is busy
+    print("Updating surplus worksheet...\n")
+    # access surplus worksheet from Google Sheet refer to SHEET variable at top
+    # use gspread worksheet() method to access our surplus worksheet
+    surplus_worksheet = SHEET.worksheet("surplus")
+    # use gspread method append_row() to add new row at end of data
+    # pass in data to be inserted
+    surplus_worksheet.append_row(data)
+    # give feedback to user that surplus worksheet updated successfully
+    print("Surplus worksheet updated successfully.\n")
+
+
 # function to calculate surplus data
 # pass it our sales data list to use in our calculations
 def calculate_surplus_data(sales_row):
@@ -136,7 +152,7 @@ def main():
     update_sales_worksheet(sales_data)
     # call function to calculate surplus data & pass sales_data
     new_surplus_data = calculate_surplus_data(sales_data)
-    print(new_surplus_data)
+    update_surplus_worksheet(new_surplus_data)
 
 
 #  welcome message to user
