@@ -107,8 +107,20 @@ def calculate_surplus_data(sales_row):
     stock = SHEET.worksheet("stock").get_all_values()
     # access stock list and slice to always get the last row
     stock_row = stock[-1]
-    # view the stock row
-    print(stock_row)
+    
+    # create empty surplus_data list
+    surplus_data = []
+    # iterate through stock & sales rows by using zip() method
+    # compare our stock & sales data
+    for stock, sales in zip(stock_row, sales_row):
+        # subtract sales value from stock to calculate surplus
+        # add int() method to convert stock data from str to int
+        surplus = int(stock) - sales
+        # append the surplus calculation in the surplus data
+        surplus_data.append(surplus)
+
+    # return the new list from the function
+    return surplus_data
 
 
 # function for all main function calls
@@ -123,7 +135,8 @@ def main():
     # call our function and pass it our sales_data list
     update_sales_worksheet(sales_data)
     # call function to calculate surplus data & pass sales_data
-    calculate_surplus_data(sales_data)
+    new_surplus_data = calculate_surplus_data(sales_data)
+    print(new_surplus_data)
 
 
 #  welcome message to user
